@@ -1,8 +1,10 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList } from "react-native";
 import PrimeVideoLogo from "../../assets/prime_video.png";
 import AmazonLogo from "../../assets/amazon_logo.png";
 
 import MovieTheWheel from "../../assets/movies/the_wheel_of_time.png"
+import { MOVIESWATCHING } from "../../utils/moviesWatching";
+import { MoviesCard } from "../../components/MoviesCard";
 
 export const Home = () => {
     return  (
@@ -30,6 +32,18 @@ export const Home = () => {
             <TouchableOpacity style={styles.movieImageThumbnail}>
                 <Image style={styles.movieImage} source={MovieTheWheel} />
             </TouchableOpacity>
+
+            <Text style={styles.movieText} >Continue Watching</Text>
+            <FlatList 
+                data={MOVIESWATCHING}
+                keyExtractor={item => item.id}
+                renderItem={({item}) => (
+                    <MoviesCard movieURL={item.moviesURL}/>
+                )}
+                horizontal
+                contentContainerStyle={styles.contentList}
+                showsHorizontalScrollIndicator={false}
+            />
 
         </View>
     );
@@ -67,11 +81,23 @@ const styles = StyleSheet.create({
         padding: 20,
     },
 
+    movieText: {
+        fontSize: 18,
+        color: "#fff",
+        fontWeight: "700",
+        padding: 15,
+    },
+
     movieImageThumbnail: {
         width: "100%",
         alignItems: "center",
     }, 
     movieImage: {
-        width: "100%"
+        width: "100%"   
+    },
+
+    contentList: {
+        paddingLeft: 18,
+        paddingRight: 30,
     },
 });
